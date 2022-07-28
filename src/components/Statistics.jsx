@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 function Statistics({
   good,
@@ -28,6 +29,7 @@ const StyledStatistics = styled(Statistics)`
     list-style: none;
     text-align: left;
     text-shadow: 0px 1px 4px #9380f0;
+    padding-left: 30%;
   }
 
   & li {
@@ -37,3 +39,11 @@ const StyledStatistics = styled(Statistics)`
 `;
 
 export default StyledStatistics;
+
+Statistics.propTypes = {
+  good: PropTypes.number.isRequired,
+  neutral: PropTypes.number.isRequired,
+  bad: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired,
+  positivePercentage: PropTypes.number.isRequired,
+};

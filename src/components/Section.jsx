@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 function Section({ title, className, children }) {
   return (
@@ -15,3 +16,8 @@ export const StyledSection = styled(Section)`
   background-color: #fcf4dc;
   font-size: 1.5em;
 `;
+
+Section.propTypes = {
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+};

@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 export default function Buttons({ btnTitles, methods }) {
   return (
@@ -30,3 +31,8 @@ const Button = styled.button`
     box-shadow: inset 0px 0px 5px black;
   }
 `;
+
+Buttons.propTypes = {
+  btnTitles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  methods: PropTypes.arrayOf(PropTypes.func).isRequired,
+};
