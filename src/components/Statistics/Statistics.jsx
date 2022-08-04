@@ -1,8 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-function Statistics({
+export default function Statistics({
   good,
   neutral,
   bad,
@@ -12,7 +11,6 @@ function Statistics({
 }) {
   return (
     <div className={className}>
-      <h2>Statistics</h2>
       <ul>
         <li>Good: {good}</li>
         <li>Neutral: {neutral}</li>
@@ -23,22 +21,6 @@ function Statistics({
     </div>
   );
 }
-
-const StyledStatistics = styled(Statistics)`
-  & ul {
-    list-style: none;
-    text-align: left;
-    text-shadow: 0px 1px 4px #9380f0;
-    padding-left: 30%;
-  }
-
-  & li {
-    line-height: 2em;
-  }
-  margin: 0 auto;
-`;
-
-export default StyledStatistics;
 
 Statistics.propTypes = {
   good: PropTypes.number.isRequired,

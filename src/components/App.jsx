@@ -1,61 +1,42 @@
-import StyledStatistics from './Statistics';
+import { StyledStatistics } from './Statistics/Statistics.styled';
 import React, { Component } from 'react';
-import FeedbackOptions from './FeedbackOptions';
-import { StyledSection } from './Section';
+import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
+import Section from './Section';
 import Notification from './Notification';
 
 export default class Widget extends Component {
-  static dafaultProps = {};
+  state = {
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  };
 
-  static propTypes = {};
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      good: 0,
-      neutral: 0,
-      bad: 0,
-    };
-  }
-
-  onGoodBtnClick = () => {
+  onBtnClick = event => {
     this.setState(prevState => {
-      return { good: (prevState.good += 1) };
+      return { [event.target.id]: (prevState[event.target.id] += 1) };
     });
   };
 
-  onNeutralBtnClick = () => {
-    this.setState(prevState => {
-      return { neutral: (prevState.neutral += 1) };
-    });
+  countTotalFeedback = () => {
+    const { good, neutral, bad } = this.state;
+    return good + neutral + bad;
   };
 
-  onBadBtnClick = () => {
-    this.setState(prevState => {
-      return { bad: (prevState.bad += 1) };
-    });
+  countPositiveFeedbackPercentage = () => {
+    return (this.state.good / this.countTotalFeedback()) * 100;
   };
 
   render() {
-    const {
-      good,
-      neutral,
-      bad,
-      total = good + neutral + bad,
-      positivePercentage = (good / total) * 100,
-    } = this.state;
+    const { good, neutral, bad } = this.state;
     return (
       <>
-        <StyledSection className title="Please leave feedback">
+        <Section title="Please leave feedback">
           <FeedbackOptions
             btnTitles={Object.keys(this.state)}
-            methods={[
-              this.onGoodBtnClick,
-              this.onNeutralBtnClick,
-              this.onBadBtnClick,
-            ]}
+            method={this.onBtnClick}
           />
+        </Section>
+        <Section className title="Statistics">
           {Object.values(this.state).every(el => el === 0) ? (
             <Notification message="There is no feedback" />
           ) : (
@@ -63,11 +44,13 @@ export default class Widget extends Component {
               good={good}
               neutral={neutral}
               bad={bad}
-              total={total}
-              positivePercentage={Number.parseInt(positivePercentage)}
+              total={this.countTotalFeedback()}
+              positivePercentage={Number.parseInt(
+                this.countPositiveFeedbackPercentage()
+              )}
             />
           )}
-        </StyledSection>
+        </Section>
       </>
     );
   }
